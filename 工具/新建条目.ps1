@@ -37,11 +37,11 @@ try {
 $scriptDir = $PSScriptRoot
 if ([string]::IsNullOrWhiteSpace($scriptDir)) { $scriptDir = (Get-Location).Path }
 $root = Split-Path $scriptDir -Parent
-$wikiDir = Join-Path $root "wiki"
-$dataPath = Join-Path $wikiDir "assets\js\entries.js"
-$indexPath = Join-Path $wikiDir "index.html"
-$imgDir = Join-Path $wikiDir "assets\images"
-$siteUrl = "https://politeelm.github.io/wiki"
+$codmDir = Join-Path $root "codm"
+$dataPath = Join-Path $codmDir "assets\js\entries.js"
+$indexPath = Join-Path $codmDir "index.html"
+$imgDir = Join-Path $codmDir "assets\images"
+$siteUrl = "https://politeelm.github.io/codm"
 
 $nl = "`r`n"
 

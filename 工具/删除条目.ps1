@@ -24,7 +24,7 @@ try {
 $scriptDir = $PSScriptRoot
 if ([string]::IsNullOrWhiteSpace($scriptDir)) { $scriptDir = (Get-Location).Path }
 $root = Split-Path $scriptDir -Parent
-$wikiDir = Join-Path $root "wiki"
+$codmDir = Join-Path $root "codm"
 
 function Pause-Exit([int]$code = 0) {
   if (-not $不暂停) { Read-Host "按回车关闭" | Out-Null }
@@ -52,8 +52,8 @@ function Ask-Text([string]$prompt, [string]$title = "删除条目") {
 
 function Step([string]$msg) { Write-Host $msg -ForegroundColor Cyan }
 
-$dataPath = Join-Path $wikiDir "assets\js\entries.js"
-$indexPath = Join-Path $wikiDir "index.html"
+$dataPath = Join-Path $codmDir "assets\js\entries.js"
+$indexPath = Join-Path $codmDir "index.html"
 
 foreach ($p in @($dataPath, $indexPath)) {
   if (-not (Test-Path -LiteralPath $p)) {

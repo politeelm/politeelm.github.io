@@ -45,7 +45,7 @@ if (-not (Test-Path (Join-Path $root ".git"))) {
 
 # 维基页面带 ?v= 缓存版本号
 $indexFiles = @()
-$wikiIndex = Join-Path $root "wiki\index.html"
+$wikiIndex = Join-Path $root "codm\index.html"
 if (Test-Path $wikiIndex) { $indexFiles += $wikiIndex }
 
 $current = 0
@@ -131,5 +131,5 @@ if (-not $ok) {
 }
 
 Write-Host ""
-Write-Host "大约 1 分钟后生效：https://politeelm.github.io/wiki/" -ForegroundColor Cyan
+Write-Host "大约 1 分钟后生效：https://politeelm.github.io/codm/" -ForegroundColor Cyan
 Write-Host "如果看到的还是旧内容，按 Ctrl + F5 强刷一次。" -ForegroundColor Cyan

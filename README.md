@@ -3,7 +3,7 @@
 一个类维基的静态站点，用来收录 CODM 圈子里那些“神人”与事迹。
 纯 HTML + CSS + 原生 JS，没有构建步骤，托管在 GitHub Pages。
 
-**线上地址：<https://politeelm.github.io/wiki/>**
+**线上地址：<https://politeelm.github.io/codm/>**
 
 ---
 
@@ -11,14 +11,14 @@
 
 ```
 politeelm.github.io/
-├── index.html                  跳到 /wiki/
-└── wiki/
+├── index.html                  跳到 /codm/
+└── codm/
     ├── index.html              维基主页面（索引 / 条目 / 分类都在这一页渲染）
     ├── 404.html
     └── assets/
-        ├── css/wiki.css        样式
+        ├── css/codm.css        样式
         ├── js/entries.js       ★ 所有条目数据 + 站点配置
-        ├── js/wiki.js          索引、搜索、分类、双链、反向链接
+        ├── js/codm.js          索引、搜索、分类、双链、反向链接
         └── images/             图片、图标
 ```
 
@@ -26,9 +26,9 @@ politeelm.github.io/
 
 | 地址 | 内容 |
 | --- | --- |
-| `/wiki/` | 索引：全部条目按首字分组 |
-| `/wiki/#/e/<slug>` | 某条条目 |
-| `/wiki/#/tag/<分类>` | 按分类筛选 |
+| `/codm/` | 索引：全部条目按首字分组 |
+| `/codm/#/e/<slug>` | 某条条目 |
+| `/codm/#/tag/<分类>` | 按分类筛选 |
 
 ---
 
@@ -62,7 +62,7 @@ txt 格式（前三行固定）：
 
 ### 手动改
 
-打开 `wiki/assets/js/entries.js`，往 `/* ENTRIES:START */` 下面加：
+打开 `codm/assets/js/entries.js`，往 `/* ENTRIES:START */` 下面加：
 
 ```js
 {
@@ -107,13 +107,13 @@ txt 格式（前三行固定）：
 
 ## 五、网站配置
 
-`wiki/assets/js/entries.js` 顶部的 `WIKI_CONFIG`：
+`codm/assets/js/entries.js` 顶部的 `WIKI_CONFIG`：
 
 ```js
 title:  "codm神人收集录",        // 站点标题
 intro:  "收录 CODM 圈子里……",   // 首页那段介绍
 catCounter: "https://count.getloli.com/@xxx?theme=cat-girls-yay",  // 猫娘计数
-hitPath: "politeelm.github.io/wiki",   // 普通计数用的路径
+hitPath: "politeelm.github.io/codm",   // 普通计数用的路径
 ```
 
 ### 两种计数
@@ -130,7 +130,7 @@ Moe-counter 的公共实例（count.getloli.com）有时被人机验证挡住，
 
 ## 六、几个说明
 
-- **数据就一个文件**：`wiki/assets/js/entries.js`，备份、迁移都只拷它。
+- **数据就一个文件**：`codm/assets/js/entries.js`，备份、迁移都只拷它。
 - **没有数据库/后端**，所以没有编辑历史、没有登录。改条目：改 `entries.js` 再推送。
 - **双链的坑**：`[[名字]]` 必须和某条目的 `title` 完全一致才会变链接，否则显示为灰色虚线的“未创建”。
 - 条目多了索引会变长，目前没做分页（维基一般也不需要）。
