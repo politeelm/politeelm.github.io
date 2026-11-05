@@ -12,7 +12,7 @@ window.WIKI_CONFIG = {
 
   /* 主站的猫娘计数（Moe-counter）。如果图挂了，会自动换成 hits.sh 的普通徽章 */
   catCounter:
-    "https://count.getloli.com/@codm-collection?theme=cat-girls-yay&padding=7&offset=1&align=top&scale=1&pixelated=1&darkmode=auto",
+    "https://count.getloli.com/@L1MA0?theme=booru-lewd&padding=7&offset=1&align=top&scale=1&pixelated=1&darkmode=auto",
   hitPath: "politeelm.github.io/wiki",
 
   footer: "内容来自公开信息与个人观察，仅供记录。"
