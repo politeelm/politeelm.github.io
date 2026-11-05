@@ -43,6 +43,7 @@
       title: e.title || "无标题",
       tags: e.tags || [],
       desc: e.desc || e.summary || stripTags(e.content).slice(0, 70),
+      recap: e.recap || "",
       content: e.content || "",
       date: e.date || "",
       plain: stripTags(e.content)
@@ -380,6 +381,14 @@
         '<section class="entry-section">' +
           '<h2 class="section-title">神人事迹</h2>' +
           '<div class="desc-box">' + (entry.desc ? escapeHtml(entry.desc) : "（未填写）") + "</div>" +
+        "</section>" +
+        '<section class="entry-section">' +
+          '<h2 class="section-title">简单回顾</h2>' +
+          '<div class="recap-box">' +
+            (String(entry.recap || "").trim()
+              ? renderWikilinks(entry.recap)
+              : '<p class="no-content">暂时没有</p>') +
+          "</div>" +
         "</section>" +
         '<section class="entry-section">' +
           '<h2 class="section-title">长篇大论</h2>' +

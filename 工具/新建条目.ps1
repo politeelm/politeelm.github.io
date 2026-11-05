@@ -246,7 +246,20 @@ if ($lines.Count -lt 3) {
 $title = $lines[0].Trim()
 $summary = $lines[1].Trim()
 $tagsLine = $lines[2].Trim()
-$bodyLines = if ($lines.Count -gt 3) { $lines[3..($lines.Count - 1)] } else { @() }
+$restLines = if ($lines.Count -gt 3) { $lines[3..($lines.Count - 1)] } else { @() }
+
+# 单独一行 --- 分隔：上面「简单回顾」（可多行），下面「长篇大论」
+$splitAt = -1
+for ($i = 0; $i -lt $restLines.Count; $i++) {
+  if ($restLines[$i].Trim() -eq "---") { $splitAt = $i; break }
+}
+if ($splitAt -ge 0) {
+  $recapLines = if ($splitAt -gt 0) { $restLines[0..($splitAt - 1)] } else { @() }
+  $bodyLines = if ($splitAt + 1 -le $restLines.Count - 1) { $restLines[($splitAt + 1)..($restLines.Count - 1)] } else { @() }
+} else {
+  $recapLines = @()
+  $bodyLines = $restLines
+}
 
 if ([string]::IsNullOrWhiteSpace($title)) {
   Write-Host "第 1 行（条目名）是空的。" -ForegroundColor Red
@@ -256,6 +269,17 @@ if ([string]::IsNullOrWhiteSpace($title)) {
 if ([string]::IsNullOrWhiteSpace($summary)) {
   Write-Host "第 2 行（神人事迹）是必填的。" -ForegroundColor Red
   Pause-Exit 1
+}
+
+$recapSb = New-Object System.Text.StringBuilder
+foreach ($rl in $recapLines) {
+  if ([string]::IsNullOrWhiteSpace($rl)) { continue }
+  [void]$recapSb.AppendLine("      <p>" + (Escape-Html $rl.Trim()) + "</p>")
+}
+$recapHtml = $recapSb.ToString().TrimEnd()
+if ([string]::IsNullOrWhiteSpace($recapHtml)) {
+  Write-Host "  （没有简单回顾，条目页会显示“暂时没有”）" -ForegroundColor DarkGray
+  $recapHtml = ""
 }
 
 $sourceDir = (Get-Item -LiteralPath $文件).DirectoryName
@@ -308,6 +332,9 @@ $block = @"
     tags: $tagsJs,
     date: "$date",
     desc: $(Escape-Js $summary),
+    recap: ``
+$(Escape-Template $recapHtml)
+    ``,
     content: ``
 $(Escape-Template $bodyHtml)
     ``

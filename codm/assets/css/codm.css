@@ -819,3 +819,23 @@ html[data-theme="dark"] .entry-page {
 .entry-contact a:hover {
   color: var(--accent);
 }
+/* 简单回顾：多行段落，左侧细线区分 */
+.recap-box {
+  padding-left: 1rem;
+  border-left: 2px solid var(--line);
+}
+
+.recap-box p {
+  margin: 0 0 0.55em;
+  font-size: 0.96rem;
+  line-height: 1.85;
+  color: var(--text);
+}
+
+.recap-box p:last-child {
+  margin-bottom: 0;
+}
+
+.recap-box .no-content {
+  color: var(--text-soft);
+}

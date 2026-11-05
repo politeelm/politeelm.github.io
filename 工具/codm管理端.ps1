@@ -211,15 +211,37 @@ function New-Entry([string]$file) {
   $title = $lines[0].Trim()
   $desc = $lines[1].Trim()
   $tagsLine = if ($lines.Count -gt 2) { $lines[2].Trim() } else { "" }
-  $bodyLines = if ($lines.Count -gt 3) { $lines[3..($lines.Count - 1)] } else { @() }
+  $restLines = if ($lines.Count -gt 3) { $lines[3..($lines.Count - 1)] } else { @() }
+
+  # 用单独一行 --- 分隔：上面是「简单回顾」（可多行），下面是「长篇大论」
+  $splitAt = -1
+  for ($i = 0; $i -lt $restLines.Count; $i++) {
+    if ($restLines[$i].Trim() -eq "---") { $splitAt = $i; break }
+  }
+
+  if ($splitAt -ge 0) {
+    $recapLines = if ($splitAt -gt 0) { $restLines[0..($splitAt - 1)] } else { @() }
+    $bodyLines = if ($splitAt + 1 -le $restLines.Count - 1) { $restLines[($splitAt + 1)..($restLines.Count - 1)] } else { @() }
+  } else {
+    $recapLines = @()
+    $bodyLines = $restLines
+  }
 
   if ([string]::IsNullOrWhiteSpace($title)) { Log "第 1 行（条目名）是空的" "Red"; return $false }
   if ([string]::IsNullOrWhiteSpace($desc)) { Log "第 2 行（神人事迹）是必填的" "Red"; return $false }
 
+  # 简单回顾：一行一段
+  $recapSb = New-Object System.Text.StringBuilder
+  foreach ($rl in $recapLines) {
+    if ([string]::IsNullOrWhiteSpace($rl)) { continue }
+    [void]$recapSb.AppendLine("      <p>" + (Escape-Html $rl.Trim()) + "</p>")
+  }
+  $recapHtml = $recapSb.ToString().TrimEnd()
+
   $bodyHtml = Convert-BodyToHtml $bodyLines (Split-Path -Parent $file)
   if ([string]::IsNullOrWhiteSpace($bodyHtml)) {
     $bodyHtml = ""
-    Log "没有长篇大论，条目页会显示“暂时没有”"
+    if ([string]::IsNullOrWhiteSpace($recapHtml)) { if ([string]::IsNullOrWhiteSpace($recapHtml)) { Log "没有简单回顾，条目页会显示“暂时没有”" } }
   }
 
   $tags = @()
@@ -243,6 +265,9 @@ function New-Entry([string]$file) {
     tags: $tagsJs,
     date: "$date",
     desc: $(Escape-Js $desc),
+    recap: ``
+$(Escape-Template $recapHtml)
+    ``,
     content: ``
 $(Escape-Template $bodyHtml)
     ``
