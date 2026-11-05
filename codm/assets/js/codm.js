@@ -378,7 +378,7 @@
           readCounterHtml(entry.slug) +
         "</div>" +
         '<section class="entry-section">' +
-          '<h2 class="section-title">简单介绍</h2>' +
+          '<h2 class="section-title">神人事迹</h2>' +
           '<div class="desc-box">' + (entry.desc ? escapeHtml(entry.desc) : "（未填写）") + "</div>" +
         "</section>" +
         '<section class="entry-section">' +

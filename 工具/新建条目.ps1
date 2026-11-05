@@ -254,7 +254,7 @@ if ([string]::IsNullOrWhiteSpace($title)) {
 }
 
 if ([string]::IsNullOrWhiteSpace($summary)) {
-  Write-Host "第 2 行（简单介绍）是必填的。" -ForegroundColor Red
+  Write-Host "第 2 行（神人事迹）是必填的。" -ForegroundColor Red
   Pause-Exit 1
 }
 

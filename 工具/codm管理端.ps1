@@ -214,7 +214,7 @@ function New-Entry([string]$file) {
   $bodyLines = if ($lines.Count -gt 3) { $lines[3..($lines.Count - 1)] } else { @() }
 
   if ([string]::IsNullOrWhiteSpace($title)) { Log "第 1 行（条目名）是空的" "Red"; return $false }
-  if ([string]::IsNullOrWhiteSpace($desc)) { Log "第 2 行（简单介绍）是必填的" "Red"; return $false }
+  if ([string]::IsNullOrWhiteSpace($desc)) { Log "第 2 行（神人事迹）是必填的" "Red"; return $false }
 
   $bodyHtml = Convert-BodyToHtml $bodyLines (Split-Path -Parent $file)
   if ([string]::IsNullOrWhiteSpace($bodyHtml)) {
@@ -361,7 +361,7 @@ function Set-Busy([bool]$busy) {
 
 $btnNew.Add_Click({
   $dlg = New-Object System.Windows.Forms.OpenFileDialog
-  $dlg.Title = "选择条目 txt（第 1 行条目名，第 2 行简单介绍，第 3 行分类，第 4 行起长篇大论）"
+  $dlg.Title = "选择条目 txt（第 1 行条目名，第 2 行神人事迹，第 3 行分类，第 4 行起长篇大论）"
   $dlg.Filter = "文本文件 (*.txt)|*.txt|所有文件 (*.*)|*.*"
   $dlg.InitialDirectory = [Environment]::GetFolderPath("Desktop")
   if ($dlg.ShowDialog() -ne [System.Windows.Forms.DialogResult]::OK) { return }
