@@ -206,7 +206,7 @@ function New-Entry([string]$file) {
 
   $raw = (Read-TextSmart $file).TrimStart([char]0xFEFF)
   $lines = $raw -split "\r?\n"
-  if ($lines.Count -lt 2) { Log "格式不对：至少要有 条目名 + 简单介绍 两行" "Red"; return $false }
+  if ($lines.Count -lt 2) { Log "格式不对：至少要有 条目名 + 神人事迹 两行" "Red"; return $false }
 
   $title = $lines[0].Trim()
   $desc = $lines[1].Trim()
