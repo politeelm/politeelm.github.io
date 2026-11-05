@@ -42,7 +42,7 @@
       slug: e.slug,
       title: e.title || "无标题",
       tags: e.tags || [],
-      summary: e.summary || stripTags(e.content).slice(0, 70),
+      desc: e.desc || e.summary || stripTags(e.content).slice(0, 70),
       content: e.content || "",
       date: e.date || "",
       plain: stripTags(e.content)
@@ -231,7 +231,7 @@
                     "<li>" +
                       '<a href="#/e/' + encodeURIComponent(e.slug) + '">' +
                         '<span class="entry-name">' + escapeHtml(e.title) + "</span>" +
-                        '<span class="entry-desc">' + escapeHtml(e.summary) + "</span>" +
+                        '<span class="entry-desc">' + escapeHtml(e.desc || "") + "</span>" +
                       "</a>" +
                     "</li>"
                   );
@@ -319,7 +319,7 @@
         });
         var list = q
           ? base.filter(function (e) {
-              return (e.title + " " + e.summary + " " + e.plain).toLowerCase().indexOf(q) !== -1;
+              return (e.title + " " + e.desc + " " + e.plain).toLowerCase().indexOf(q) !== -1;
             })
           : base;
 
@@ -377,8 +377,20 @@
           (entry.date ? "<span>" + escapeHtml(fmtDate(entry.date)) + "</span>" : "") +
           readCounterHtml(entry.slug) +
         "</div>" +
-        (entry.summary ? '<p class="entry-summary">' + escapeHtml(entry.summary) + "</p>" : "") +
-        '<div class="prose">' + renderWikilinks(entry.content) + "</div>" +
+        '<section class="entry-section">' +
+          '<h2 class="section-title">简单介绍</h2>' +
+          '<div class="desc-box">' + (entry.desc ? escapeHtml(entry.desc) : "（未填写）") + "</div>" +
+        "</section>" +
+        '<section class="entry-section">' +
+          '<h2 class="section-title">长篇大论</h2>' +
+          '<div class="prose">' +
+            (String(entry.content || "").trim()
+              ? renderWikilinks(entry.content)
+              : '<p class="no-content">暂时没有</p>') +
+          "</div>" +
+        "</section>" +
+        '<p class="entry-contact">投稿：<a href="mailto:' + escapeHtml(cfg.contact || "steamryy@outlook.com") + '">' +
+          escapeHtml(cfg.contact || "steamryy@outlook.com") + "</a></p>" +
         '<div class="entry-foot">' +
           (bl.length
             ? "<h2>哪些条目提到了它</h2>" +

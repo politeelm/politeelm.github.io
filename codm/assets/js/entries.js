@@ -14,6 +14,7 @@ window.WIKI_CONFIG = {
   catCounter:
     "https://count.getloli.com/@L1MA0?theme=booru-lewd&padding=7&offset=1&align=top&scale=1&pixelated=1&darkmode=auto",
   hitPath: "politeelm.github.io/codm",
+  contact: "steamryy@outlook.com",
 
   footer: "内容来自公开信息与个人观察，仅供记录。"
 };

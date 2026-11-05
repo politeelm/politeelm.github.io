@@ -253,13 +253,18 @@ if ([string]::IsNullOrWhiteSpace($title)) {
   Pause-Exit 1
 }
 
+if ([string]::IsNullOrWhiteSpace($summary)) {
+  Write-Host "第 2 行（简单介绍）是必填的。" -ForegroundColor Red
+  Pause-Exit 1
+}
+
 $sourceDir = (Get-Item -LiteralPath $文件).DirectoryName
 Resolve-Images $bodyLines $sourceDir
 $bodyHtml = Convert-BodyToHtml $bodyLines
 
 if ([string]::IsNullOrWhiteSpace($bodyHtml)) {
-  Write-Host "正文是空的（第 4 行往后没有内容）。" -ForegroundColor Red
-  Pause-Exit 1
+  Write-Host "  （没有长篇大论，条目页会显示“暂时没有”）" -ForegroundColor DarkGray
+  $bodyHtml = ""
 }
 
 $tags = @()
@@ -302,7 +307,7 @@ $block = @"
     title: $(Escape-Js $title),
     tags: $tagsJs,
     date: "$date",
-    summary: $(Escape-Js $summary),
+    desc: $(Escape-Js $summary),
     content: ``
 $(Escape-Template $bodyHtml)
     ``
